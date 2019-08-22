@@ -13,10 +13,11 @@ io.on("connection", function(socket) {
   // event for join room
   socket.on("join_room", room => {
     socket.join(room);
-    console.log("join");
   });
   // event for leave room
-  socket.on("leave_room", room => {});
+  socket.on("leave_room", room => {
+    socket.leave(room);
+  });
 
   // event, received data from device, send data to UI (Face feature)
   socket.on("face_event", data => {
@@ -36,7 +37,6 @@ io.on("connection", function(socket) {
   });
   // event, received data from device, send data to UI (transport image)
   socket.on("image", data => {
-    console.log("masuk");
     let newData = data.split(",");
     io.in("room_image").emit("image_data", newData[1]);
   });
